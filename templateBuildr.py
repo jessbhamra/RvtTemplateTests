@@ -25,11 +25,11 @@ def update_drafting_views_from_master(master_doc, current_doc):
          for view_name, master_view in master_views_dict.items():
             if view_name in current_views_dict:
                  current_view = current_views_dict[view_name]
-    #             # Activate the view (this might need to be handled differently, as direct view activation is not typical in Revit API)
-    #             # Delete the contents of the current view
-    #             # Note: This step requires identifying and deleting individual elements within the view, which can vary based on content
-    #             # Copy content from master view to current view
-    #             # This step is complex and might require recreating elements manually or using third-party libraries
+    #              Activate the view (this might need to be handled differently, as direct view activation is not typical in Revit API)
+    #              Delete the contents of the current view
+    #              Note: This step requires identifying and deleting individual elements within the view, which can vary based on content
+    #              Copy content from master view to current view
+    #              This step is complex and might require recreating elements manually or using third-party libraries
                  print("Drafting view '{}' has been updated from the master model.".format(view_name))
          trans.Commit()
 
