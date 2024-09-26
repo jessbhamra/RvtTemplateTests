@@ -3,10 +3,7 @@ from Autodesk.Revit.DB import (
     Transaction,
     ViewDrafting,
     ElementId,
-    ElementCategoryFilter,
-    BuiltInCategory,
     ElementTransformUtils,
-    XYZ,
     Transform
 )
 from pyrevit import revit, DB, forms
@@ -27,14 +24,22 @@ def get_drafting_views_dict(doc):
 def load_master_document(master_path):
     app = revit.app  # Get the Revit application
     if not os.path.exists(master_path):
-        forms.alert(f"Master document not found at: {master_path}", title="Error", warn_icon=True)
+        forms.alert(
+            "Master document not found at: {}".format(master_path),
+            title="Error",
+            warn_icon=True
+        )
         return None
     # Open the master document
     try:
         master_doc = app.OpenDocumentFile(master_path)
         return master_doc
     except Exception as e:
-        forms.alert(f"Failed to open master document.\nError: {e}", title="Error", warn_icon=True)
+        forms.alert(
+            "Failed to open master document.\nError: {}".format(e),
+            title="Error",
+            warn_icon=True
+        )
         return None
 
 # Function to delete all elements in a drafting view
@@ -71,7 +76,13 @@ def copy_elements_from_master(doc, master_doc, master_view, current_view):
             # Example: Assign to current view if applicable
             # Note: This depends on element type and whether they are view-specific
     except Exception as e:
-        forms.alert(f"Failed to copy elements from master view '{master_view.Name}' to current view '{current_view.Name}'.\nError: {e}", title="Error", warn_icon=True)
+        forms.alert(
+            "Failed to copy elements from master view '{}' to current view '{}'.\nError: {}".format(
+                master_view.Name, current_view.Name, e
+            ),
+            title="Error",
+            warn_icon=True
+        )
 
 # Function to compare and update drafting views
 def update_drafting_views_from_master(master_doc, current_doc):
@@ -87,11 +98,15 @@ def update_drafting_views_from_master(master_doc, current_doc):
                 delete_elements_in_view(current_doc, current_view)
                 # Copy elements from master view to current view
                 copy_elements_from_master(current_doc, master_doc, master_view, current_view)
-                print(f"Drafting view '{view_name}' has been updated from the master model.")
+                print("Drafting view '{}' has been updated from the master model.".format(view_name))
             else:
                 # Optionally, create the view in current_doc if it doesn't exist
                 # This requires duplicating the view from master_doc to current_doc
-                forms.alert(f"Drafting view '{view_name}' does not exist in the current document.", title="Info", warn_icon=False)
+                forms.alert(
+                    "Drafting view '{}' does not exist in the current document.".format(view_name),
+                    title="Info",
+                    warn_icon=False
+                )
         trans.Commit()
 
 # Main function
@@ -119,7 +134,7 @@ def main():
     try:
         master_doc.Close(False)  # False to not save changes
     except Exception as e:
-        print(f"Could not close master document: {e}")
+        print("Could not close master document: {}".format(e))
 
 # Call the main function
 if __name__ == "__main__":
