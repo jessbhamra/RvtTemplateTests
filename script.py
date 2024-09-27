@@ -102,8 +102,7 @@ def update_drafting_views_from_master(master_doc, current_doc):
                 copy_elements_from_master(current_doc, master_doc, master_view, current_view)
                 print("Drafting view '{}' has been updated from the master model.".format(view_name))
             else:
-                # Optionally, create the view in current_doc if it doesn't exist
-                # This requires duplicating the view from master_doc to current_doc
+   
                 forms.alert(
                     "Drafting view '{}' does not exist in the current document.".format(view_name),
                     title="Info",
