@@ -5,12 +5,18 @@ from Autodesk.Revit.DB import (
     ElementId,
     ElementTransformUtils,
     Transform,
-    OpenOptions
+    OpenOptions,
+    ModelPathUtils,
+    FilePath
 )
 from pyrevit import revit, DB, forms
 import Autodesk.Revit.DB as DB
 import clr
+clr.AddReference("System")
+from System.Collections.Generic import List
 import os
+
+ui = __revit__.ActiveUIDocument
 
 # Function to get a dictionary of drafting view names and their elements
 def get_drafting_views_dict(doc):
@@ -32,9 +38,11 @@ def load_master_document(master_path):
         )
         return None
     # Open the master document
+ # Convert the string path to a ModelPath object
     try:
-        open_options = OpenOptions()
-        master_doc = app.OpenDocumentFile(master_path, open_options)
+        model_path = ModelPathUtils.ConvertUserVisiblePathToModelPath(master_path)
+        open_options = DB.OpenOptions()
+        master_doc = app.OpenDocumentFile(model_path, open_options)
         return master_doc
     except Exception as e:
         forms.alert(
@@ -45,24 +53,26 @@ def load_master_document(master_path):
         return None
 
 # Function to delete all elements in a drafting view
+import clr
+clr.AddReference("System")
+from System.Collections.Generic import List
+from Autodesk.Revit.DB import ElementId
+
+# Function to delete all elements in a drafting view
 def delete_elements_in_view(doc, view):
     # Get all elements visible in the view
     collector = FilteredElementCollector(doc, view.Id).WhereElementIsNotElementType().ToElements()
-    # Optionally, filter out certain categories if needed
-    # For example, to exclude annotations:
-    # collector = [e for e in collector if not e.Category or e.Category.CategoryType != DB.CategoryType.Annotation]
-    ids_to_delete = [e.Id for e in collector]
-    if ids_to_delete:
-        DB.ElementTransformUtils.DeleteElements(doc, ids_to_delete)
+    # Convert to .NET List[ElementId]
+    ids_to_delete = List[ElementId]([e.Id for e in collector])
+    if ids_to_delete.Count > 0:
+        doc.Delete(ids_to_delete)
 
 # Function to copy elements from master view to current view
 def copy_elements_from_master(doc, master_doc, master_view, current_view):
     # Get all elements in the master view
     master_elements = FilteredElementCollector(master_doc, master_view.Id).WhereElementIsNotElementType().ToElements()
-    # Prepare list of ElementIds to copy
-    elements_to_copy = [e.Id for e in master_elements]
-    # Define the destination view
-    dest_view_id = current_view.Id
+    # Convert to .NET List[ElementId]
+    elements_to_copy = List[ElementId]([e.Id for e in master_elements])
     # Perform the copy operation
     try:
         copied_elements = ElementTransformUtils.CopyElements(
@@ -72,11 +82,7 @@ def copy_elements_from_master(doc, master_doc, master_view, current_view):
             Transform.Identity,
             DB.CopyPasteOptions()
         )
-        # Optionally, move elements to the destination view by setting their view-specific parameters
-        for copied_elem_id in copied_elements:
-            copied_elem = doc.GetElement(copied_elem_id)
-            # Example: Assign to current view if applicable
-            # Note: This depends on element type and whether they are view-specific
+        # Additional code...
     except Exception as e:
         forms.alert(
             "Failed to copy elements from master view '{}' to current view '{}'.\nError: {}".format(
@@ -85,6 +91,7 @@ def copy_elements_from_master(doc, master_doc, master_view, current_view):
             title="Error",
             warn_icon=True
         )
+
 
 # Function to compare and update drafting views
 def update_drafting_views_from_master(master_doc, current_doc):
@@ -125,7 +132,7 @@ def main():
     current_doc = revit.doc  # This is your current project document
 
     # Ensure master_doc and current_doc are not the same
-    if master_doc.Id == current_doc.Id:
+    if master_doc.GetProjectId == current_doc.GetProjectId:
         forms.alert("Master document and current document are the same.", title="Error", warn_icon=True)
         return
 
