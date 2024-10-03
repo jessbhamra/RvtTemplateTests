@@ -70,7 +70,7 @@ def delete_elements_in_view(doc, view):
         BuiltInCategory.OST_InsulationLines,   # Insulation Lines
         BuiltInCategory.OST_KeynoteTags,      # Keynote Tags
         BuiltInCategory.OST_MaterialTags,     # Material Tags
-        # Add any additional categories as needed
+        # any additional categories ??
     ]
     
     # Create a .NET List[BuiltInCategory]
