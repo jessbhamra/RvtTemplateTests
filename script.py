@@ -108,7 +108,7 @@ def copy_elements_from_master(doc, master_doc, master_view, current_view):
         BuiltInCategory.OST_InsulationLines,   # Insulation Lines
         BuiltInCategory.OST_KeynoteTags,      # Keynote Tags
         BuiltInCategory.OST_MaterialTags,     # Material Tags
-        # Add any additional categories as needed
+        #  any additional categories ??
     ]
     
     # Create a .NET List[BuiltInCategory]
