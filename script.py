@@ -113,13 +113,24 @@ def copy_elements_from_master(doc, master_doc, master_view, current_view):
         BuiltInCategory.OST_MultiCategoryTags,
         BuiltInCategory.OST_Tags,
         BuiltInCategory.OST_RasterImages,
-        #BuiltInCategory.OST_CalloutLeaderLine,
-        #BuiltInCategory.OST_MaskingRegion,
-        #BuiltInCategory.OST_GenericAnnotation,
-        #BuiltInCategory.
-        #BuiltInCategory.
-        #BuiltInCategory.
-        #BuiltInCategory.
+        BuiltInCategory.OST_CalloutLeaderLine,
+        BuiltInCategory.OST_MaskingRegion,
+        BuiltInCategory.OST_GenericAnnotation,
+        BuiltInCategory.OST_IOSDetailGroups,
+        BuiltInCategory.OST_IOSArrays,
+        BuiltInCategory.OST_ReferenceLines,
+        #BuiltInCategory.OST_GenericLines,
+        #BuiltInCategory.OST_InvisibleLines,
+        #BuiltInCategory.OST_SketchLines,
+        #BuiltInCategory.OST_Curves,
+        #BuiltInCategory.OST_RepeatingDetailLines,
+        #BuiltInCategory.OST_IOSAttachedDetailGroups,
+        #BuiltInCategory.OST_SketchLines,
+        #BuiltInCategory.OST_IOSDatumPlane,
+        #BuiltInCategory.OST_IOSConstructionLine,	
+        #BuiltInCategory.OST_IOSAlignmentGraphics,	
+        #BuiltInCategory.OST_IOSAligningLine,
+
         #  any additional categories ??
     ]
     
