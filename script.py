@@ -101,13 +101,25 @@ def copy_elements_from_master(doc, master_doc, master_view, current_view):
     categories_to_copy = [
         BuiltInCategory.OST_Lines,             # Detail Lines
         BuiltInCategory.OST_DetailComponents,  # Detail Components
-        BuiltInCategory.OST_FilledRegion,      # Filled Regions (includes Masking Regions)
+        BuiltInCategory.OST_FilledRegion,      # Filled Regions 
         BuiltInCategory.OST_TextNotes,         # Text Notes
         BuiltInCategory.OST_Dimensions,        # Dimensions
         BuiltInCategory.OST_GenericAnnotation, # Generic Annotations
         BuiltInCategory.OST_InsulationLines,   # Insulation Lines
         BuiltInCategory.OST_KeynoteTags,      # Keynote Tags
         BuiltInCategory.OST_MaterialTags,     # Material Tags
+        BuiltInCategory.OST_DetailComponentsHiddenLines, 
+        BuiltInCategory.OST_DetailComponentTags,	
+        BuiltInCategory.OST_MultiCategoryTags,
+        BuiltInCategory.OST_Tags,
+        BuiltInCategory.OST_RasterImages,
+        #BuiltInCategory.OST_CalloutLeaderLine,
+        #BuiltInCategory.OST_MaskingRegion,
+        #BuiltInCategory.OST_GenericAnnotation,
+        #BuiltInCategory.
+        #BuiltInCategory.
+        #BuiltInCategory.
+        #BuiltInCategory.
         #  any additional categories ??
     ]
     
